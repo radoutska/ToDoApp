@@ -22,16 +22,20 @@ class CoreDataStack: ObservableObject {
                 fatalError("Failed to load persistent stores: \(error.localizedDescription)")
             }
         }
+        container.viewContext.mergePolicy = NSMergePolicy.mergeByPropertyObjectTrump
         return container
     }()
     
-    func saveNewTask(title: String, deadline: Date, status: String, group: Group?) {
+    func saveNewTask(title: String, deadline: Date, status: String, group: String?) {
         let newItem = Item(context: viewContext)
-        newItem.id = UUID()
+        let itemId = UUID()
+        newItem.id = itemId
         newItem.title = title
         newItem.deadline = deadline
         newItem.status = status
-//        newItem.itemGroup = group
+        if let groupName = group {
+            saveItemToGroup(item: newItem, groupName: groupName)
+        }
         do {
             try self.viewContext.save()
         } catch {
@@ -39,9 +43,16 @@ class CoreDataStack: ObservableObject {
         }
     }
     
-    func saveNewGroup(title: String) {
+    func saveNewGroup(title: String, tasks: [Item]) {
+        if fetchGroups().contains(where: { $0.name == title }) {
+            print("Can't save with the same name")
+            return
+        }
         let newGroup = Group(context: viewContext)
         newGroup.name = title
+        for each in tasks {
+            newGroup.addToItemGroup(each)
+        }
         do {
             try self.viewContext.save()
         } catch {
@@ -49,19 +60,32 @@ class CoreDataStack: ObservableObject {
         }
     }
     
-    func saveItemToGroup(title: String, deadline: Date, status: String, groupName: String) {
+    func saveItemToGroup(item: Item, groupName: String) {
         let fetchRequest = NSFetchRequest<Group>(entityName: "Group")
         let queryPredicate = NSPredicate(format: "name == %@", groupName)
         fetchRequest.predicate = queryPredicate
         do {
             let response = try viewContext.fetch(fetchRequest)
             guard let group = response.first else { return }
-            saveNewTask(title: title, deadline: deadline, status: status, group: group)
+            group.addToItemGroup(item)
+            try self.viewContext.save()
         } catch {
-            let group = Group(context: viewContext)
-            group.name = groupName
-            saveNewTask(title: title, deadline: deadline, status: status, group: group)
+            // TODO: Error handling
         }
+    }
+    
+    func getItem(itemId: UUID) -> Item? {
+        let fetchRequest = NSFetchRequest<Item>(entityName: "Item")
+        let queryPredicate = NSPredicate(format: "id == %@", itemId as NSUUID)
+        fetchRequest.predicate = queryPredicate
+        do {
+            let response = try viewContext.fetch(fetchRequest)
+            guard let item = response.first else { return nil }
+            return item
+        } catch {
+           // TODO: Error handling
+        }
+        return nil
     }
     
     func fetchTasks() -> [Item] {

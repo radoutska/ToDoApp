@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		35023A722C241CA900FEB452 /* ItemRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35023A712C241CA900FEB452 /* ItemRowView.swift */; };
 		35023A902C25834200FEB452 /* GroupsScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35023A8F2C25834200FEB452 /* GroupsScrollView.swift */; };
+		35023A922C25E35100FEB452 /* GroupInputForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35023A912C25E35100FEB452 /* GroupInputForm.swift */; };
+		35023A942C26D5FF00FEB452 /* GroupDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35023A932C26D5FE00FEB452 /* GroupDetailsView.swift */; };
+		35023A962C2832B400FEB452 /* ItemRowListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35023A952C2832B400FEB452 /* ItemRowListView.swift */; };
 		358555BD2C0B3104006B6C0C /* ToDoAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 358555BC2C0B3104006B6C0C /* ToDoAppApp.swift */; };
 		358555BF2C0B3104006B6C0C /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 358555BE2C0B3104006B6C0C /* ContentView.swift */; };
 		358555C12C0B3106006B6C0C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 358555C02C0B3106006B6C0C /* Assets.xcassets */; };
@@ -28,6 +31,9 @@
 /* Begin PBXFileReference section */
 		35023A712C241CA900FEB452 /* ItemRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemRowView.swift; sourceTree = "<group>"; };
 		35023A8F2C25834200FEB452 /* GroupsScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupsScrollView.swift; sourceTree = "<group>"; };
+		35023A912C25E35100FEB452 /* GroupInputForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupInputForm.swift; sourceTree = "<group>"; };
+		35023A932C26D5FE00FEB452 /* GroupDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupDetailsView.swift; sourceTree = "<group>"; };
+		35023A952C2832B400FEB452 /* ItemRowListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemRowListView.swift; sourceTree = "<group>"; };
 		358555B92C0B3104006B6C0C /* ToDoApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ToDoApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		358555BC2C0B3104006B6C0C /* ToDoAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoAppApp.swift; sourceTree = "<group>"; };
 		358555BE2C0B3104006B6C0C /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -82,7 +88,6 @@
 				35930B592C10AE7800D0FB22 /* Views */,
 				358555BC2C0B3104006B6C0C /* ToDoAppApp.swift */,
 				358555BE2C0B3104006B6C0C /* ContentView.swift */,
-				358555D92C0B32AD006B6C0C /* InputForm.swift */,
 				358555C02C0B3106006B6C0C /* Assets.xcassets */,
 				358555C22C0B3106006B6C0C /* Preview Content */,
 				358555CA2C0B311D006B6C0C /* ToDoList.xcdatamodeld */,
@@ -104,9 +109,13 @@
 		35930B592C10AE7800D0FB22 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				35023A912C25E35100FEB452 /* GroupInputForm.swift */,
+				358555D92C0B32AD006B6C0C /* InputForm.swift */,
 				35930B5C2C10AE9800D0FB22 /* GroupView.swift */,
 				35023A712C241CA900FEB452 /* ItemRowView.swift */,
 				35023A8F2C25834200FEB452 /* GroupsScrollView.swift */,
+				35023A932C26D5FE00FEB452 /* GroupDetailsView.swift */,
+				35023A952C2832B400FEB452 /* ItemRowListView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -181,6 +190,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				35023A962C2832B400FEB452 /* ItemRowListView.swift in Sources */,
 				358555BF2C0B3104006B6C0C /* ContentView.swift in Sources */,
 				35930B512C103B0100D0FB22 /* Group+CoreDataClass.swift in Sources */,
 				35023A722C241CA900FEB452 /* ItemRowView.swift in Sources */,
@@ -193,8 +203,10 @@
 				358555D62C0B31F9006B6C0C /* CoreDataStack.swift in Sources */,
 				358555DC2C0B32DE006B6C0C /* ToDoStatus.swift in Sources */,
 				35930B522C103B0100D0FB22 /* Group+CoreDataProperties.swift in Sources */,
+				35023A922C25E35100FEB452 /* GroupInputForm.swift in Sources */,
 				358555BD2C0B3104006B6C0C /* ToDoAppApp.swift in Sources */,
 				358555D42C0B3196006B6C0C /* Item+CoreDataProperties.swift in Sources */,
+				35023A942C26D5FF00FEB452 /* GroupDetailsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

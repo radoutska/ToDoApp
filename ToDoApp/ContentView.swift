@@ -8,8 +8,18 @@
 import SwiftUI
 
 struct ContentView: View {
+    private enum SheetType {
+        case task
+        case group
+        
+        var id: Int {
+            hashValue
+        }
+    }
+    
     @State private var searchText = ""
     @State private var isPresented: Bool = false
+    @State private var sheetType: SheetType = .task
     @StateObject private var viewModel = ViewModel()
     
     var body: some View {
@@ -26,10 +36,10 @@ struct ContentView: View {
                         .tint(.gray)
                     }
                     GroupsScrollView(groups: $viewModel.groups)
-                    .scrollIndicators(.hidden)
-                    .searchable(text: $searchText)
+                        .scrollIndicators(.hidden)
+                        .searchable(text: $searchText)
                     HStack {
-                        Text("My tasks")
+                        Text("My open tasks")
                             .fontWeight(.semibold)
                         Spacer()
                     }
@@ -44,9 +54,20 @@ struct ContentView: View {
                     
                     Button("Button") {
                         isPresented.toggle()
+                        sheetType = .task
+                        
+                    }
+                    Button("Group") {
+                        sheetType = .group
+                        isPresented.toggle()
                     }
                     .sheet(isPresented: $isPresented) {
-                        InputForm(viewModel: viewModel)
+                        switch $sheetType.wrappedValue {
+                        case .task:
+                            InputForm(viewModel: viewModel)
+                        case .group:
+                            GroupInputForm(viewModel: viewModel)
+                        }
                     }
                 }
                 .padding()

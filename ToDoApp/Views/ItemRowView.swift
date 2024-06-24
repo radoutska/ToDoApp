@@ -10,18 +10,36 @@ import SwiftUI
 struct ItemRowView: View {
     @State var item: Item
     
+    private let dateFormatter: DateFormatter = {
+        var formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "en_US")
+        return formatter
+    }()
+    
+    private var dateDeadline: String {
+        guard let date = item.deadline else { return "" }
+        dateFormatter.setLocalizedDateFormatFromTemplate("dMMM")
+        return dateFormatter.string(from: date)
+    }
+    
+    private var fullDateDeadline: String {
+        guard let date = item.deadline else { return "" }
+        dateFormatter.timeStyle = .short
+        return dateFormatter.string(from: date)
+    }
+    
     var body: some View {
         HStack(spacing: 20) {
-            Text("12 PM")
+            Text("\(dateDeadline)" )
                 .foregroundStyle(.gray)
                 .font(.system(size: 13))
                 .fontWeight(.medium)
-            HStack() {
+            HStack(alignment: .top) {
                 VStack(alignment: .leading, spacing: 10) {
                     Text(item.title ?? "Untitled")
                         .font(.system(size: 15))
                         .fontWeight(.regular)
-                    Text(dateFormatting())
+                    Text(fullDateDeadline)
                         .font(.system(size: 12))
                         .foregroundStyle(.gray)
                         .fontWeight(.light)
@@ -29,25 +47,16 @@ struct ItemRowView: View {
                 .padding(.vertical, 10)
                 .padding(.horizontal, 15)
                 Spacer()
+                Text(item.itemGroup?.name ?? "")
+                    .padding(.top, 10)
+                    .font(.system(size: 12))
+                    .foregroundStyle(.gray)
+                    .padding(.trailing, 15)
             }
             .background(.white)
             .clipShape(RoundedRectangle(cornerRadius: 7))
             .shadow(color: .gray.opacity(0.5), radius: 5)
         }
     }
-    
-    private func dateFormatting() -> String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateStyle = .short
-        return dateFormatter.string(from: item.deadline ?? Date())
-    }
-}
-
-#Preview {
-    var item = Item()
-    item.title = "Item"
-    item.status = "blocked"
-    item.id = UUID()
-    return ItemRowView(item: item)
 }
 

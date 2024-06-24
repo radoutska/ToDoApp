@@ -33,7 +33,7 @@ struct GroupView: View {
                 .padding(.bottom, 10)
                 .padding(.top, 25)
             }
-            ProgressView("50%", value: 50, total: 100)
+            ProgressView(String("\(group.percent)%"), value: Double(group.percent), total: 100)
                 .font(.system(size: 14))
                 .fontWeight(.bold)
                 .padding([.bottom], 15)
