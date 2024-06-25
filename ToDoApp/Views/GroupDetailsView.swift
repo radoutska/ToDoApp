@@ -10,6 +10,7 @@ import SwiftUI
 struct GroupDetailsView: View {
     @Environment(\.dismiss) var dismiss
     @State var group: Group
+    @ObservedObject var viewModel: ViewModel
     
     var body: some View {
         NavigationView {
@@ -18,7 +19,7 @@ struct GroupDetailsView: View {
                 VStack {
                     if let items = group.itemGroup as? Set<Item> {
                         ForEach(Array(items)) { item in
-                            ItemRowView(item: item)
+                            ItemRowView(item: item, viewModel: viewModel)
                                 .padding([.vertical], 10)
                         }
                     } else {

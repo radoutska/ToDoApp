@@ -8,13 +8,7 @@
 import SwiftUI
 
 struct GroupView: View {
-    @State var group: Group
-    @State var completedPercent: Int
-    
-    init(group: Group, completedPercent: Int) {
-        self.group = group
-        self.completedPercent = completedPercent
-    }
+    @Binding var group: Group
     
     var body: some View {
         VStack {

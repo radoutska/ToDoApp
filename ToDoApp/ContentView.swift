@@ -35,7 +35,7 @@ struct ContentView: View {
                         }
                         .tint(.gray)
                     }
-                    GroupsScrollView(groups: $viewModel.groups)
+                    GroupsScrollView(viewModel: viewModel)
                         .scrollIndicators(.hidden)
                         .searchable(text: $searchText)
                     HStack {
@@ -47,7 +47,7 @@ struct ContentView: View {
                     
                     VStack {
                         ForEach(viewModel.tasks, id: \.self) {
-                            item in ItemRowView(item: item)
+                            item in ItemRowView(item: item, viewModel: viewModel)
                                 .padding([.vertical], 10)
                         }
                     }
@@ -62,7 +62,7 @@ struct ContentView: View {
                         isPresented.toggle()
                     }
                     .sheet(isPresented: $isPresented) {
-                        switch $sheetType.wrappedValue {
+                        switch $sheetType.wrappedValue  {
                         case .task:
                             InputForm(viewModel: viewModel)
                         case .group:

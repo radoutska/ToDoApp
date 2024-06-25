@@ -9,29 +9,37 @@ import SwiftUI
 
 struct GroupInputForm: View {
     @Environment(\.dismiss) var dismiss
-    @State var viewModel: ViewModel
+    @StateObject var viewModel: ViewModel
     
     @State private var title: String = ""
-    @State private var selectedTasks: [Item] = []
     
     var body: some View {
         NavigationView {
             VStack(spacing: 10) {
-                TextField("Enter group name",
-                          text: $title)
-                .padding(.top, 20)
-                VStack {
-                    ForEach(viewModel.tasks, id: \.id) { item in
-                        let selected = item.itemGroup != nil
-                        ItemRowListView(disabled: selected, item: item)
+                Form {
+                    Section {
+                        TextField("Enter group name", text: $title)
+                    }
+                    Section {
+                        ForEach(viewModel.tasks) { item in
+                            ItemRowListView(isSelected: Binding<Bool>(
+                                get: {
+                                    viewModel.isSelected(item: item)
+                                },
+                                set: { _ in
+                                    viewModel.toggleSelection(for: item)
+                                }
+                            ), item: item)
                             .onTapGesture {
-                                selectTask(item: item)
+                                viewModel.toggleSelection(for: item)
                             }
+                        }
                     }
                 }
+                .scrollContentBackground(.hidden)
                 
                 Button {
-                    viewModel.addGroup(title: title, tasks: selectedTasks)
+                    viewModel.addGroup(title: title)
                     dismiss()
                 } label: {
                     Text("Save")
@@ -44,15 +52,9 @@ struct GroupInputForm: View {
                 }
                 .padding(.horizontal, 10)
             }
-            .padding(30)
             .navigationTitle("Create new group")
             .navigationBarTitleDisplayMode(.inline)
         }
-        .navigationViewStyle(StackNavigationViewStyle())
-    }
-    
-    private func selectTask(item: Item) {
-        viewModel.addTaskToSelected(item: item)
     }
 }
 //

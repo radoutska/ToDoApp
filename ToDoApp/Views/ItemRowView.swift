@@ -9,28 +9,11 @@ import SwiftUI
 
 struct ItemRowView: View {
     @State var item: Item
-    
-    private let dateFormatter: DateFormatter = {
-        var formatter = DateFormatter()
-        formatter.locale = Locale(identifier: "en_US")
-        return formatter
-    }()
-    
-    private var dateDeadline: String {
-        guard let date = item.deadline else { return "" }
-        dateFormatter.setLocalizedDateFormatFromTemplate("dMMM")
-        return dateFormatter.string(from: date)
-    }
-    
-    private var fullDateDeadline: String {
-        guard let date = item.deadline else { return "" }
-        dateFormatter.timeStyle = .short
-        return dateFormatter.string(from: date)
-    }
+    @ObservedObject var viewModel: ViewModel
     
     var body: some View {
         HStack(spacing: 20) {
-            Text("\(dateDeadline)" )
+            Text("\(viewModel.dateDeadline(for: item.deadline))" )
                 .foregroundStyle(.gray)
                 .font(.system(size: 13))
                 .fontWeight(.medium)
@@ -39,7 +22,7 @@ struct ItemRowView: View {
                     Text(item.title ?? "Untitled")
                         .font(.system(size: 15))
                         .fontWeight(.regular)
-                    Text(fullDateDeadline)
+                    Text(viewModel.fullDateDeadline(for: item.deadline))
                         .font(.system(size: 12))
                         .foregroundStyle(.gray)
                         .fontWeight(.light)

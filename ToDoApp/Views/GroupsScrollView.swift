@@ -8,25 +8,25 @@
 import SwiftUI
 
 struct GroupsScrollView: View {
-    @Binding var groups: [Group]
+    @ObservedObject var viewModel: ViewModel
     @State private var selectedGroup: Group?
-
     @State private var isPresented: Bool = false
     
     var body: some View {
         ScrollView(.horizontal) {
             HStack {
-                ForEach(groups, id: \.self) {
-                    group in GroupView(group: group, completedPercent: group.percent)
+                ForEach($viewModel.groups, id: \.self) {
+                    group in GroupView(group: group)
                         .clipShape(RoundedRectangle(cornerRadius: 10))
                         .shadow(radius: 5)
                         .padding(5)
+                        .padding(.vertical, 10)
                         .onTapGesture {
-                            selectedGroup = group
+                            selectedGroup = group.wrappedValue
                             isPresented.toggle()
                         }
                         .sheet(item: $selectedGroup) { group in
-                            GroupDetailsView(group: group)
+                            GroupDetailsView(group: group, viewModel: viewModel)
                         }
                 }
             }

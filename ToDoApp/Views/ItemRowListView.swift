@@ -8,21 +8,15 @@
 import SwiftUI
 
 struct ItemRowListView: View {
-    @State var selected: Bool = false
-    @State var disabled: Bool
+    @Binding var isSelected: Bool
+    var disabled: Bool {
+        item.itemGroup != nil
+    }
     
     let item: Item
     
-    private let dateFormatter: DateFormatter = {
-        var formatter = DateFormatter()
-        formatter.locale = Locale(identifier: "en_US")
-        return formatter
-    }()
-    
     private var fullDateDeadline: String {
-        guard let date = item.deadline else { return "" }
-        dateFormatter.dateStyle = .medium
-        return dateFormatter.string(from: date)
+        ViewModel.dateFormatter.string(from: item.deadline ?? Date())
     }
     
     var body: some View {
@@ -44,7 +38,7 @@ struct ItemRowListView: View {
                     .fontWeight(.light)
             }
             Spacer()
-            if selected {
+            if $isSelected.wrappedValue {
                 Image(systemName: "checkmark")
                     .padding(.trailing, 5)
             }
@@ -52,8 +46,5 @@ struct ItemRowListView: View {
         .padding(10)
         .background(.babyBlue)
         .clipShape(RoundedRectangle(cornerRadius: 5))
-        .onTapGesture {
-            selected.toggle()
-        }
     }
 }

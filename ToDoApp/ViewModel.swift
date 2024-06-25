@@ -13,7 +13,7 @@ class ViewModel: ObservableObject {
     @Published var tasks: [Item] = []
     @Published var groups: [Group] = []
     
-    private var selectedTasks: [Item] = []
+    @Published var selectedTasks: Array<Item> = []
     
     private var dataManager = CoreDataStack.shared
     
@@ -22,8 +22,8 @@ class ViewModel: ObservableObject {
         fetchGroups()
     }
     
-    func addGroup(title: String, tasks: [Item]) {
-        dataManager.saveNewGroup(title: title, tasks: tasks)
+    func addGroup(title: String) {
+        dataManager.saveNewGroup(title: title, tasks: selectedTasks)
         fetchGroups()
     }
     
@@ -54,12 +54,41 @@ class ViewModel: ObservableObject {
         dataManager.deleteGroup(name: name)
     }
     
-    func addTaskToSelected(item: Item) {
-        if selectedTasks.contains(where: { $0.id == item.id }) {
+    func toggleSelection(for item: Item) {
+        if selectedTasks.contains(item) {
             selectedTasks.removeAll(where: { $0.id == item.id })
-        }
-        else {
+        } else {
             selectedTasks.append(item)
         }
+    }
+    
+    func isSelected(item: Item) -> Bool {
+        return selectedTasks.contains(item)
+    }
+    
+    // TODO: Separate date formatter
+    static let dateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "en_US")
+        formatter.dateStyle = .medium
+        return formatter
+    }()
+    
+    func mediumDateDeadline(for date: Date?) -> String {
+        guard let date = date else { return "" }
+        Self.dateFormatter.dateStyle = .medium
+        return Self.dateFormatter.string(from: date)
+    }
+    
+    func dateDeadline(for date: Date?) -> String {
+        guard let date = date else { return "" }
+        Self.dateFormatter.setLocalizedDateFormatFromTemplate("dMMM")
+        return Self.dateFormatter.string(from: date)
+    }
+    
+    func fullDateDeadline(for date: Date?) -> String {
+        guard let date = date else { return "" }
+        Self.dateFormatter.timeStyle = .short
+        return Self.dateFormatter.string(from: date)
     }
 }
