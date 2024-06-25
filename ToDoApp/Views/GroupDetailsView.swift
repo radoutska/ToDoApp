@@ -15,21 +15,20 @@ struct GroupDetailsView: View {
     var body: some View {
         NavigationView {
             VStack {
-                Text("\(String(group.itemGroup?.count ?? 0)) items")
                 VStack {
                     if let items = group.itemGroup as? Set<Item> {
                         ForEach(Array(items)) { item in
-                            ItemRowView(item: item, viewModel: viewModel)
+                            ItemRowView(item: item, viewModel: viewModel, showStatus: true)
                                 .padding([.vertical], 10)
                         }
                     } else {
-                        Text("No items")
+                        // TODO:
                     }
                 }
                 Spacer()
             }
             .padding(.horizontal, 10)
-            .navigationTitle(group.name ?? "Untitled")
+            .navigationTitle("\(group.name ?? "Untitled") (\(group.itemGroup?.count ?? 0))")
             .navigationBarTitleDisplayMode(.inline)
             .toolbarRole(.navigationStack)
             .toolbar {

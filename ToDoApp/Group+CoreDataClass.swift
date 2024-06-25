@@ -25,7 +25,7 @@ extension Group {
             if items.count == 0 {
                 return 100
             }
-                return Int(counter/items.count) * 100
+            return Int(Double(counter)/Double(items.count) * 100.0)
         }
         return 0
     }

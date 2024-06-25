@@ -10,6 +10,7 @@ import SwiftUI
 struct ItemRowView: View {
     @State var item: Item
     @ObservedObject var viewModel: ViewModel
+    var showStatus: Bool = false
     
     var body: some View {
         HStack(spacing: 20) {
@@ -30,11 +31,21 @@ struct ItemRowView: View {
                 .padding(.vertical, 10)
                 .padding(.horizontal, 15)
                 Spacer()
-                Text(item.itemGroup?.name ?? "")
-                    .padding(.top, 10)
-                    .font(.system(size: 12))
-                    .foregroundStyle(.gray)
-                    .padding(.trailing, 15)
+                if showStatus {
+                    Text(item.status ?? "open")
+                        .foregroundStyle(ToDoStatus(rawValue: item.status ?? "open")?.color ?? .gray)
+                        .padding(.top, 10)
+                        .font(.system(size: 12))
+                        .foregroundStyle(.gray)
+                        .padding(.trailing, 15)
+                }
+                else {
+                    Text(item.itemGroup?.name ?? "")
+                        .padding(.top, 10)
+                        .font(.system(size: 12))
+                        .foregroundStyle(.gray)
+                        .padding(.trailing, 15)
+                }
             }
             .background(.white)
             .clipShape(RoundedRectangle(cornerRadius: 7))

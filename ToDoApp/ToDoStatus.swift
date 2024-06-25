@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 enum ToDoStatus: String, CaseIterable, Identifiable {
     var id: Self { self }
@@ -15,4 +16,17 @@ enum ToDoStatus: String, CaseIterable, Identifiable {
     case finished
     
     var description: String { rawValue }
+    
+    var color: Color {
+        switch self {
+        case .open:
+            Color.black
+        case .pending:
+            Color.green
+        case .blocked:
+            Color.blue
+        case .finished:
+            Color.gray
+        }
+    }
 }
