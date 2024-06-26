@@ -24,53 +24,43 @@ struct ContentView: View {
     
     var body: some View {
         NavigationStack {
-            ScrollView(.vertical) {
-                VStack(spacing: 10) {
-                    HStack {
-                        Text("Categories")
-                            .fontWeight(.semibold)
-                        Spacer()
-                        Button("View all") {
-                            // TODO: Add view all
+            ZStack {
+                ScrollView(.vertical) {
+                    VStack(spacing: 5) {
+                        HStack {
+                            Text("Categories")
+                                .fontWeight(.semibold)
+                            Spacer()
+                            Button {
+                                isPresented.toggle()
+                            } label: {
+                                Image(systemName: "plus")
+                            }
+                            .tint(.gray)
                         }
-                        .tint(.gray)
-                    }
-                    GroupsScrollView(viewModel: viewModel)
-                        .scrollIndicators(.hidden)
-                        .searchable(text: $searchText)
-                    HStack {
-                        Text("My open tasks")
-                            .fontWeight(.semibold)
-                        Spacer()
-                    }
-                    .padding([.vertical], 15)
-                    
-                    VStack {
-                        ForEach(viewModel.tasks, id: \.self) {
-                            item in ItemRowView(item: item, viewModel: viewModel)
-                                .padding([.vertical], 10)
+                        GroupsScrollView(viewModel: viewModel)
+                            .scrollIndicators(.hidden)
+                        HStack {
+                            Text("My open tasks")
+                                .fontWeight(.semibold)
+                            Spacer()
                         }
-                    }
-                    
-                    Button("Button") {
-                        isPresented.toggle()
-                        sheetType = .task
+                        .padding([.vertical], 15)
                         
-                    }
-                    Button("Group") {
-                        sheetType = .group
-                        isPresented.toggle()
-                    }
-                    .sheet(isPresented: $isPresented) {
-                        switch $sheetType.wrappedValue  {
-                        case .task:
-                            InputForm(viewModel: viewModel)
-                        case .group:
+                        VStack {
+                            ForEach(viewModel.tasks, id: \.self) {
+                                item in ItemRowView(item: item, viewModel: viewModel)
+                                    .padding([.vertical], 10)
+                            }
+                        }
+                        .sheet(isPresented: $isPresented) {
                             GroupInputForm(viewModel: viewModel)
                         }
                     }
+                    .searchable(text: $searchText)
+                    .padding()
                 }
-                .padding()
+                CustomTabBar(viewModel: viewModel)
             }
         }
     }
