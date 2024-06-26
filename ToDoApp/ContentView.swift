@@ -62,6 +62,8 @@ struct ContentView: View {
                 }
                 CustomTabBar(viewModel: viewModel)
             }
+            .navigationTitle("Welcome back!")
+            .navigationBarTitleDisplayMode(.inline)
         }
     }
 }

@@ -38,10 +38,9 @@ struct ItemRowListView: View {
                     .fontWeight(.light)
             }
             Spacer()
-            if $isSelected.wrappedValue {
-                Image(systemName: "checkmark")
-                    .padding(.trailing, 5)
-            }
+            Image(systemName: "checkmark")
+                .padding(.trailing, 5)
+                .opacity($isSelected.wrappedValue ? 1 : 0)
         }
         .padding(10)
         .background(.babyBlue)

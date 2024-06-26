@@ -15,6 +15,13 @@ struct CustomTabBar: View {
         ZStack(alignment: .bottom) {
             VStack {
                 Spacer()
+                Rectangle()
+                    .fill(Color.white)
+                    .blur(radius: 20)
+                    .frame(height: 50)
+            }
+            VStack {
+                Spacer()
                 TabBarShape()
                     .fill(Color.babyBlue)
                     .frame(height: 50)
@@ -28,6 +35,7 @@ struct CustomTabBar: View {
                         startPoint: .leading,
                         endPoint: .trailing))
                     .frame(width: 50, height: 50)
+                    .shadow(radius: 3)
                     .overlay(
                         Image(systemName: "plus")
                             .foregroundColor(.white)

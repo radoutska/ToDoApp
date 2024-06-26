@@ -28,7 +28,7 @@ struct GroupDetailsView: View {
                 Spacer()
             }
             .padding(.horizontal, 10)
-            .navigationTitle("\(group.name ?? "Untitled") (\(group.itemGroup?.count ?? 0))")
+            .navigationTitle("\(group.name ?? "Untitled")")
             .navigationBarTitleDisplayMode(.inline)
             .toolbarRole(.navigationStack)
             .toolbar {

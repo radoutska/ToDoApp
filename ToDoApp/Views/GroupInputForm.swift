@@ -15,12 +15,19 @@ struct GroupInputForm: View {
     
     var body: some View {
         NavigationView {
-            VStack(spacing: 10) {
+            VStack {
                 Form {
                     Section {
                         TextField("Enter group name", text: $title)
+                            .listRowBackground(Color("babyBlue"))
+                    } header: {
+                        Text("Title")
+                            .textCase(nil)
                     }
+                    
                     Section {
+                        Text("Tasks in this group")
+                            .fontWeight(.light)
                         ForEach(viewModel.tasks) { item in
                             ItemRowListView(isSelected: Binding<Bool>(
                                 get: {
@@ -34,7 +41,11 @@ struct GroupInputForm: View {
                                 viewModel.toggleSelection(for: item)
                             }
                         }
+                        .listRowBackground(Color("babyBlue").opacity(0.3))
+                        .listRowSeparator(.hidden)
                     }
+                    .listRowInsets(EdgeInsets())
+
                 }
                 .scrollContentBackground(.hidden)
                 
@@ -54,10 +65,21 @@ struct GroupInputForm: View {
             }
             .navigationTitle("Create new group")
             .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button {
+                        dismiss()
+                    } label: {
+                        Image(systemName: "xmark")
+                            .foregroundStyle(.black)
+                            .font(.system(size: 12))
+                    }
+                }
+            }
         }
     }
 }
-//
-//#Preview {
-//    GroupInputForm(viewModel: ViewModel())
-//}
+
+#Preview {
+    GroupInputForm(viewModel: ViewModel())
+}

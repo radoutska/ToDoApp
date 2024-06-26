@@ -30,9 +30,7 @@ struct InputForm: View {
     @State private var deadline: Date = Date()
     @State private var time: Date = Date()
     @State private var selectedGroup: String?
-    
-    @State private var showingAlert = false
-    
+        
     var body: some View {
         NavigationView {
             VStack {
@@ -51,6 +49,7 @@ struct InputForm: View {
                         Text("Date")
                             .textCase(nil)
                     }
+                    .tint(.black)
                     .listRowBackground(Color("babyBlue"))
                     Section {
                         Picker("Status", selection: $status){
@@ -60,7 +59,7 @@ struct InputForm: View {
                             }
                         }
                         .pickerStyle(SegmentedPickerStyle())
-                        .background(.blue)
+                        .background(.blue.opacity(0.5))
                         .cornerRadius(8)
                         .padding(5)
                     } header: {
@@ -78,16 +77,14 @@ struct InputForm: View {
                                 }
                             }
                         }
+                        .listRowBackground(Color("babyBlue"))
+                        .tint(.black)
                     }
                 }
+                .scrollDisabled(true)
                 .scrollContentBackground(.hidden)
                 Button {
-                    if title.isEmpty {
-                        showingAlert.toggle()
-                    }
-                    else {
                         save()
-                    }
                 } label: {
                     Text("Save")
                         .frame(minWidth: 100, maxWidth: .infinity)
@@ -97,20 +94,19 @@ struct InputForm: View {
                         .background(.blue)
                         .clipShape(RoundedRectangle(cornerRadius: 8))
                 }
-                .alert("Please enter title", isPresented: $showingAlert) {
-                            Button("Sure!", role: .cancel) { }
-                        }
                 .padding(.horizontal, 5)
                 Spacer()
             }
             .navigationTitle("New task")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                ToolbarItem(placement: .topBarLeading) {
+                ToolbarItem(placement: .topBarTrailing) {
                     Button {
                         dismiss()
                     } label: {
-                        Text("gkkg")
+                        Image(systemName: "xmark")
+                            .foregroundStyle(.black)
+                            .font(.system(size: 12))
                     }
 
                 }

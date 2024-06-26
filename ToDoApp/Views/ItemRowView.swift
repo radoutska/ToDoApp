@@ -11,6 +11,7 @@ struct ItemRowView: View {
     @State var item: Item
     @ObservedObject var viewModel: ViewModel
     var showStatus: Bool = false
+    @State private var isPresented: Bool = false
     
     var body: some View {
         HStack(spacing: 20) {
@@ -50,6 +51,12 @@ struct ItemRowView: View {
             .background(.white)
             .clipShape(RoundedRectangle(cornerRadius: 7))
             .shadow(color: .gray.opacity(0.5), radius: 5)
+        }
+        .onTapGesture {
+            isPresented.toggle()
+        }
+        .sheet(isPresented: $isPresented) {
+            InputForm(viewModel: viewModel)
         }
     }
 }
