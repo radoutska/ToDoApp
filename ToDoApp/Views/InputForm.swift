@@ -21,23 +21,23 @@ struct InputForm: View {
             formStatus = .edit
         }
     }
-    
-    @State var group: Group?
-    
-    @State private var formStatus: InputFormStatus = .create
+        
+    @State private var formStatus: InputFormStatus = .edit
     @State private var status: ToDoStatus = .open
     @State private var title: String = ""
     @State private var deadline: Date = Date()
     @State private var time: Date = Date()
     @State private var selectedGroup: String?
-        
+    
     var body: some View {
         NavigationView {
             VStack {
                 Form {
                     Section {
                         TextField("Enter task name",
-                                  text: $title)
+                                  text: $title).onAppear() {
+                            self.title = item?.title ?? "Untitled"
+                        }
                     } header: {
                         Text("Title")
                             .textCase(nil)
@@ -45,6 +45,9 @@ struct InputForm: View {
                     .listRowBackground(Color("babyBlue"))
                     Section {
                         DatePicker("Select a deadline", selection: $deadline)
+                            .onAppear() {
+                                self.deadline = item?.deadline ?? Date()
+                            }
                     } header: {
                         Text("Date")
                             .textCase(nil)
@@ -57,6 +60,10 @@ struct InputForm: View {
                                 Text(option.description)
                                     .tag(option)
                             }
+                        }
+                        .onAppear() {
+                            self.status = ToDoStatus(rawValue: item?.status ?? "Open") ?? ToDoStatus.open
+                            self.selectedGroup = item?.itemGroup?.name
                         }
                         .pickerStyle(SegmentedPickerStyle())
                         .background(.blue.opacity(0.5))
@@ -84,9 +91,10 @@ struct InputForm: View {
                 .scrollDisabled(true)
                 .scrollContentBackground(.hidden)
                 Button {
-                        save()
+                    save()
                 } label: {
-                    Text("Save")
+                    // TODO: Fix this
+                    Text(formStatus == .edit ? "Update" : "Save")
                         .frame(minWidth: 100, maxWidth: .infinity)
                         .foregroundStyle(.white)
                         .fontWeight(.heavy)
@@ -108,7 +116,6 @@ struct InputForm: View {
                             .foregroundStyle(.black)
                             .font(.system(size: 12))
                     }
-
                 }
             }
         }
@@ -118,9 +125,9 @@ struct InputForm: View {
         switch formStatus {
         case .create:
             viewModel.addTask(title: $title.wrappedValue, deadline: $deadline.wrappedValue, status: $status.wrappedValue.description, group: $selectedGroup.wrappedValue)
-        default:
-            break
-            // TODO: Something
+        case .edit:
+            guard let id = item?.id else { return }
+            viewModel.editTask(id: id, title: $title.wrappedValue, deadline: $deadline.wrappedValue, status: $status.wrappedValue.description, group: $selectedGroup.wrappedValue)
         }
         dismiss()
     }

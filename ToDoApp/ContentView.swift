@@ -19,6 +19,7 @@ struct ContentView: View {
     
     @State private var searchText = ""
     @State private var isPresented: Bool = false
+    @State private var isEdited: Bool = false
     @State private var sheetType: SheetType = .task
     @StateObject private var viewModel = ViewModel()
     
@@ -44,13 +45,18 @@ struct ContentView: View {
                             Text("My open tasks")
                                 .fontWeight(.semibold)
                             Spacer()
+                            Button("Edit") {
+                                isEdited.toggle()
+                            }
                         }
                         .padding([.vertical], 15)
                         
                         VStack {
                             ForEach(viewModel.tasks, id: \.self) {
-                                item in ItemRowView(item: item, viewModel: viewModel)
-                                    .padding([.vertical], 10)
+                                item in
+                                ZStack {
+                                    ItemRowView(item: item, viewModel: viewModel, isEdited: $isEdited)
+                                }
                             }
                         }
                         .sheet(isPresented: $isPresented) {

@@ -46,8 +46,18 @@ class ViewModel: ObservableObject {
         fetchTasks()
     }
     
-    func deleteTask(item: Item) {
-        dataManager.deleteTask(task: item)
+    func editTask(id: UUID, title: String, deadline: Date, status: String, group: String?) {
+        let existingTask = tasks.first { $0.id == id }
+        guard let existingTask = existingTask else { return }
+        dataManager.updateTask(id: existingTask.id, title: title, deadline: deadline, status: status, group: group)
+        fetchTasks()
+    }
+    
+    func deleteTask(item: Item, completion: @escaping (Bool) -> ()) {
+        dataManager.deleteTask(task: item) { isSuccess in
+            self.tasks = self.dataManager.fetchTasks()
+            completion(isSuccess)
+        }
     }
     
     func deleteGroup(name: String) {

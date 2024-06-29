@@ -17,7 +17,7 @@ extension Item {
     }
 
     @NSManaged public var deadline: Date?
-    @NSManaged public var id: UUID?
+    @NSManaged public var id: UUID
     @NSManaged public var status: String?
     @NSManaged public var title: String?
     @NSManaged public var itemGroup: Group?

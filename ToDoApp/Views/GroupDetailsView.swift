@@ -11,6 +11,7 @@ struct GroupDetailsView: View {
     @Environment(\.dismiss) var dismiss
     @State var group: Group
     @ObservedObject var viewModel: ViewModel
+    @State private var isEdited: Bool = false
     
     var body: some View {
         NavigationView {
@@ -18,8 +19,7 @@ struct GroupDetailsView: View {
                 VStack {
                     if let items = group.itemGroup as? Set<Item> {
                         ForEach(Array(items)) { item in
-                            ItemRowView(item: item, viewModel: viewModel, showStatus: true)
-                                .padding([.vertical], 10)
+                            ItemRowView(item: item, viewModel: viewModel, isEdited: $isEdited, showStatus: true)
                         }
                     } else {
                         // TODO:

@@ -61,17 +61,26 @@ class CoreDataStack: ObservableObject {
     }
     
     func saveItemToGroup(item: Item, groupName: String) {
-        let fetchRequest = NSFetchRequest<Group>(entityName: "Group")
-        let queryPredicate = NSPredicate(format: "name == %@", groupName)
-        fetchRequest.predicate = queryPredicate
+        guard let group = getGroup(name: groupName) else { return }
         do {
-            let response = try viewContext.fetch(fetchRequest)
-            guard let group = response.first else { return }
             group.addToItemGroup(item)
             try self.viewContext.save()
         } catch {
             // TODO: Error handling
         }
+    }
+    
+    func getGroup(name: String) -> Group? {
+        let fetchRequest = NSFetchRequest<Group>(entityName: "Group")
+        let queryPredicate = NSPredicate(format: "name == %@", name)
+        fetchRequest.predicate = queryPredicate
+        do {
+            let response = try viewContext.fetch(fetchRequest)
+            return response.first
+        } catch {
+            // TODO: Error handling
+        }
+        return nil
     }
     
     func getItem(itemId: UUID) -> Item? {
@@ -83,7 +92,7 @@ class CoreDataStack: ObservableObject {
             guard let item = response.first else { return nil }
             return item
         } catch {
-           // TODO: Error handling
+            // TODO: Error handling
         }
         return nil
     }
@@ -126,10 +135,11 @@ class CoreDataStack: ObservableObject {
         return []
     }
     
-    func deleteTask(task: Item) {
+    func deleteTask(task: Item, completion: @escaping (Bool) -> ()) {
         viewContext.delete(task)
         do {
             try viewContext.save()
+            completion(true)
         }
         catch {
             // TODO: Error handling
@@ -161,6 +171,23 @@ class CoreDataStack: ObservableObject {
         }
         catch {
             // TODO: Add error handling
+        }
+    }
+    
+    func updateTask(id: UUID, title: String, deadline: Date, status: String, group: String?) {
+        var item = getItem(itemId: id)
+        item?.setValue(title, forKey: "title")
+        item?.setValue(deadline, forKey: "deadline")
+        item?.setValue(status, forKey: "status")
+        if let group = group {
+            var group = getGroup(name: group)
+            item?.setValue(group, forKey: "itemGroup")
+        }
+        do {
+            try viewContext.save()
+        }
+        catch {
+            // TODO: Error handling
         }
     }
 }
