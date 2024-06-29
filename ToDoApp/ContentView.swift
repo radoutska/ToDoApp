@@ -23,6 +23,15 @@ struct ContentView: View {
     @State private var sheetType: SheetType = .task
     @StateObject private var viewModel = ViewModel()
     
+    var searchResults: [Item] {
+        if searchText.isEmpty {
+            return viewModel.tasks
+        } else {
+            return viewModel.tasks.filter {
+                $0.title.contains(searchText) }
+        }
+    }
+    
     var body: some View {
         NavigationStack {
             ZStack {
@@ -52,7 +61,7 @@ struct ContentView: View {
                         .padding([.vertical], 15)
                         
                         VStack {
-                            ForEach(viewModel.tasks, id: \.self) {
+                            ForEach(searchResults, id: \.self) {
                                 item in
                                 ZStack {
                                     ItemRowView(item: item, viewModel: viewModel, isEdited: $isEdited)

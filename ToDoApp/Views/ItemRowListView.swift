@@ -22,7 +22,7 @@ struct ItemRowListView: View {
     var body: some View {
         HStack {
             if disabled {
-                Text(item.title ?? "Untitled")
+                Text(item.title)
                     .fontWeight(.light)
                 Text(String(fullDateDeadline))
                     .font(.system(size: 12))
@@ -30,7 +30,7 @@ struct ItemRowListView: View {
                     .fontWeight(.light)
             }
             else {
-                Text(item.title ?? "Untitled")
+                Text(item.title)
                     .fontWeight(.light)
                 Text(String(fullDateDeadline))
                     .font(.system(size: 12))
