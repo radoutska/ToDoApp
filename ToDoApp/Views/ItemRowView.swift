@@ -23,7 +23,7 @@ struct ItemRowView: View {
                     .fontWeight(.medium)
                 HStack(alignment: .top) {
                     VStack(alignment: .leading, spacing: 10) {
-                        Text(item.title ?? "Untitled")
+                        Text(item.title)
                             .font(.system(size: 15))
                             .fontWeight(.regular)
                         Text(viewModel.fullDateDeadline(for: item.deadline))

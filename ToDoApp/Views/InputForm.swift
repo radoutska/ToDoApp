@@ -127,6 +127,7 @@ struct InputForm: View {
     private func save() {
         switch formStatus {
         case .create:
+            if title.isEmpty { title = "Untitled" }
             viewModel.addTask(title: $title.wrappedValue, deadline: $deadline.wrappedValue, status: $status.wrappedValue.description, group: $selectedGroup.wrappedValue)
         case .edit:
             guard let id = item?.id else { return }
