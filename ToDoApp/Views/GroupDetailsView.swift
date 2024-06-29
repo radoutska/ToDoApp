@@ -23,6 +23,7 @@ struct GroupDetailsView: View {
                         }
                     } else {
                         // TODO:
+                        
                     }
                 }
                 Spacer()

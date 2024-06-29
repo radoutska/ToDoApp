@@ -36,7 +36,7 @@ struct InputForm: View {
                     Section {
                         TextField("Enter task name",
                                   text: $title).onAppear() {
-                            self.title = item?.title ?? "Untitled"
+                            self.title = item?.title ?? ""
                         }
                     } header: {
                         Text("Title")
@@ -46,7 +46,7 @@ struct InputForm: View {
                     Section {
                         DatePicker("Select a deadline", selection: $deadline)
                             .onAppear() {
-                                self.deadline = item?.deadline ?? Date()
+                                self.deadline = item?.deadline ?? Date.now
                             }
                     } header: {
                         Text("Date")
@@ -79,7 +79,7 @@ struct InputForm: View {
                         Section {
                             Picker("Group", selection: $selectedGroup) {
                                 ForEach(viewModel.groups) { group in
-                                    Text(group.name ?? "Untitled")
+                                    Text(group.name ?? "")
                                         .tag(group.name)
                                 }
                             }
@@ -105,7 +105,7 @@ struct InputForm: View {
                 .padding(.horizontal, 5)
                 Spacer()
             }
-            .navigationTitle("New task")
+            .navigationTitle(formStatus == .create ? "New task" : "Update task")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
@@ -118,6 +118,9 @@ struct InputForm: View {
                     }
                 }
             }
+        }
+        .onAppear {
+            self.formStatus = item != nil ? InputFormStatus.edit : InputFormStatus.create
         }
     }
     

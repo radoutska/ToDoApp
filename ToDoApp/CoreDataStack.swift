@@ -142,7 +142,7 @@ class CoreDataStack: ObservableObject {
             completion(true)
         }
         catch {
-            // TODO: Error handling
+            completion(false)
         }
     }
     
@@ -175,12 +175,12 @@ class CoreDataStack: ObservableObject {
     }
     
     func updateTask(id: UUID, title: String, deadline: Date, status: String, group: String?) {
-        var item = getItem(itemId: id)
+        let item = getItem(itemId: id)
         item?.setValue(title, forKey: "title")
         item?.setValue(deadline, forKey: "deadline")
         item?.setValue(status, forKey: "status")
         if let group = group {
-            var group = getGroup(name: group)
+            let group = getGroup(name: group)
             item?.setValue(group, forKey: "itemGroup")
         }
         do {

@@ -61,7 +61,12 @@ struct ItemRowView: View {
             if $isEdited.wrappedValue {
                 Button {
                     viewModel.deleteTask(item: item) { isSucceed in
-                        //TODO: Animation
+                        if isSucceed {
+                            
+                        }
+                        else {
+                            // TODO: Handle error
+                        }
                     }
                 } label: {
                     Image(systemName: "minus.circle.fill")
