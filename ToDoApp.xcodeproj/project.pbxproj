@@ -29,6 +29,7 @@
 		35F996A42C2B70B5001D26CF /* CustomTapBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35F996A32C2B70B5001D26CF /* CustomTapBar.swift */; };
 		35F996A82C2B7349001D26CF /* TabBarShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35F996A72C2B7349001D26CF /* TabBarShape.swift */; };
 		35F996AA2C2C0023001D26CF /* UserAccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35F996A92C2C0023001D26CF /* UserAccountView.swift */; };
+		35F996AE2C316B70001D26CF /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 35F996AD2C316B70001D26CF /* Localizable.xcstrings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -55,6 +56,7 @@
 		35F996A32C2B70B5001D26CF /* CustomTapBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTapBar.swift; sourceTree = "<group>"; };
 		35F996A72C2B7349001D26CF /* TabBarShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarShape.swift; sourceTree = "<group>"; };
 		35F996A92C2C0023001D26CF /* UserAccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAccountView.swift; sourceTree = "<group>"; };
+		35F996AD2C316B70001D26CF /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -91,6 +93,7 @@
 		358555BB2C0B3104006B6C0C /* ToDoApp */ = {
 			isa = PBXGroup;
 			children = (
+				35F996AD2C316B70001D26CF /* Localizable.xcstrings */,
 				35930B592C10AE7800D0FB22 /* Views */,
 				358555BC2C0B3104006B6C0C /* ToDoAppApp.swift */,
 				358555BE2C0B3104006B6C0C /* ContentView.swift */,
@@ -171,6 +174,7 @@
 			knownRegions = (
 				en,
 				Base,
+				uk,
 			);
 			mainGroup = 358555B02C0B3104006B6C0C;
 			productRefGroup = 358555BA2C0B3104006B6C0C /* Products */;
@@ -189,6 +193,7 @@
 			files = (
 				358555C42C0B3106006B6C0C /* Preview Assets.xcassets in Resources */,
 				358555C12C0B3106006B6C0C /* Assets.xcassets in Resources */,
+				35F996AE2C316B70001D26CF /* Localizable.xcstrings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

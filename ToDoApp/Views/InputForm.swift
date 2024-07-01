@@ -58,7 +58,7 @@ struct InputForm: View {
                         Picker("Status", selection: $status){
                             ForEach(ToDoStatus.allCases) { option in
                                 Text(option.description)
-                                    .tag(option)
+                                    .tag(option.id)
                             }
                         }
                         .onAppear() {
@@ -138,7 +138,7 @@ struct InputForm: View {
     
     private func configureTitle() -> String {
         if let item = item {
-            return item.title ?? "Untitled"
+            return item.title
         }
         else {
             return "New item"

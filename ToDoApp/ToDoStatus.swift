@@ -15,7 +15,18 @@ enum ToDoStatus: String, CaseIterable, Identifiable {
     case blocked
     case finished
     
-    var description: String { rawValue }
+    var description: String {
+        switch self {
+        case .open:
+            return NSLocalizedString("Open", comment: "ToDo case")
+        case .blocked:
+            return NSLocalizedString("Blocked", comment: "ToDo case")
+        case .finished:
+            return NSLocalizedString("Finished", comment: "ToDo case")
+        case .pending:
+            return NSLocalizedString("Pending", comment: "ToDo case")
+        }
+    }
     
     var color: Color {
         switch self {
