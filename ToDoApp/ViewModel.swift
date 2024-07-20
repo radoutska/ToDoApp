@@ -55,7 +55,9 @@ class ViewModel: ObservableObject {
     
     func deleteTask(item: Item, completion: @escaping (Bool) -> ()) {
         dataManager.deleteTask(task: item) { isSuccess in
-            self.tasks = self.dataManager.fetchTasks()
+            if isSuccess {
+                self.fetchTasks()
+            }
             completion(isSuccess)
         }
     }
